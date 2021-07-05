@@ -215,6 +215,7 @@ public abstract class FullVideoRecorder extends VideoRecorder {
                 flip ? stub.size.getHeight() : stub.size.getWidth(),
                 flip ? stub.size.getWidth() : stub.size.getHeight());
         mMediaRecorder.setVideoFrameRate(stub.videoFrameRate);
+        mMediaRecorder.setCaptureRate(stub.videoCaptureRate);
         mMediaRecorder.setVideoEncoder(mProfile.videoCodec);
         mMediaRecorder.setVideoEncodingBitRate(stub.videoBitRate);
 

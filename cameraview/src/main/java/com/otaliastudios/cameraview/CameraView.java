@@ -1591,6 +1591,26 @@ public class CameraView extends FrameLayout implements LifecycleObserver {
     }
 
     /**
+     * Sets the capture rate in frame per second for video capturing.
+     * it's can used to capture timelapse video
+     * Will be used by {@link #takeVideo(File)}.
+     *
+     * @param captureRate desired capture rate
+     */
+    public void setVideoCaptureRate(double captureRate) {
+        mCameraEngine.setVideoCaptureRate(captureRate);
+    }
+
+    /**
+     * Returns the current video bit rate.
+     * @return current bit rate
+     */
+    @SuppressWarnings("unused")
+    public double getVideoCaptureRate() {
+        return mCameraEngine.getVideoCaptureRate();
+    }
+
+    /**
      * A flag to control the behavior when calling {@link #setPreviewFrameRate(float)}.
      *
      * If the value is set to true, {@link #setPreviewFrameRate(float)} will choose the preview

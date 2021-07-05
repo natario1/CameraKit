@@ -635,6 +635,9 @@ public abstract class CameraEngine implements
     public abstract void setVideoBitRate(int videoBitRate);
     public abstract int getVideoBitRate();
 
+    public abstract void setVideoCaptureRate(double videoCaptureRate);
+    public abstract double getVideoCaptureRate();
+
     public abstract void setAudioBitRate(int audioBitRate);
     public abstract int getAudioBitRate();
 

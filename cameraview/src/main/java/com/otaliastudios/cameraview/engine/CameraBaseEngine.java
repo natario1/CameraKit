@@ -85,6 +85,7 @@ public abstract class CameraBaseEngine extends CameraEngine {
     private long mVideoMaxSize;
     private int mVideoMaxDuration;
     private int mVideoBitRate;
+    private double mVideoCaptureRate;
     private int mAudioBitRate;
     private long mAutoFocusResetDelayMillis;
     private int mSnapshotMaxWidth; // in REF_VIEW like SizeSelectors
@@ -243,6 +244,16 @@ public abstract class CameraBaseEngine extends CameraEngine {
     @Override
     public final int getVideoBitRate() {
         return mVideoBitRate;
+    }
+
+    @Override
+    public final void setVideoCaptureRate(double videoCaptureRate) {
+        mVideoCaptureRate = videoCaptureRate;
+    }
+
+    @Override
+    public final double getVideoCaptureRate() {
+        return mVideoCaptureRate;
     }
 
     @Override
@@ -601,6 +612,7 @@ public abstract class CameraBaseEngine extends CameraEngine {
                 stub.maxSize = mVideoMaxSize;
                 stub.maxDuration = mVideoMaxDuration;
                 stub.videoBitRate = mVideoBitRate;
+                stub.videoCaptureRate = mVideoCaptureRate;
                 stub.audioBitRate = mAudioBitRate;
                 onTakeVideo(stub);
             }
@@ -626,6 +638,7 @@ public abstract class CameraBaseEngine extends CameraEngine {
                 stub.location = mLocation;
                 stub.facing = mFacing;
                 stub.videoBitRate = mVideoBitRate;
+                stub.videoCaptureRate = mVideoCaptureRate;
                 stub.audioBitRate = mAudioBitRate;
                 stub.audio = mAudio;
                 stub.maxSize = mVideoMaxSize;

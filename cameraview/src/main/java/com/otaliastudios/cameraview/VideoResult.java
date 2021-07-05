@@ -41,6 +41,7 @@ public class VideoResult {
         public int maxDuration;
         public int endReason;
         public int videoBitRate;
+        public double videoCaptureRate;
         public int videoFrameRate;
         public int audioBitRate;
     }
