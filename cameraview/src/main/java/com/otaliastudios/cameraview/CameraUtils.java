@@ -7,7 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Handler;
+import android.os.ParcelFileDescriptor;
 
 import com.otaliastudios.cameraview.controls.Facing;
 import com.otaliastudios.cameraview.engine.mappers.Camera1Mapper;
@@ -99,6 +101,34 @@ public class CameraUtils {
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
+    @Nullable
+    @WorkerThread
+    @SuppressLint("NewApi")
+    public static Uri writeToFile(Context context, @NonNull final byte[] data, @NonNull Uri file) {
+        OutputStream stream =  null;
+        Uri result;
+        try {
+            ParcelFileDescriptor fd = context.getContentResolver().openFileDescriptor(file, "w");
+            stream = new ParcelFileDescriptor.AutoCloseOutputStream(fd);
+            stream.write(data);
+            stream.flush();
+            result = file;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                if (stream != null) {
+                    stream.close();
+                }
+            } catch (Exception ignored) {
+
+            }
+        }
+        return result;
+    }
+
 
     /**
      * Writes the given data to the given file in a background thread, returning on the
@@ -119,6 +149,26 @@ public class CameraUtils {
             @Override
             public void run() {
                 final File result = writeToFile(data, file);
+                ui.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onFileReady(result);
+                    }
+                });
+            }
+        });
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public static void writeToFile(final Context context,
+                                   @NonNull final byte[] data,
+                                   @NonNull final Uri file,
+                                   @NonNull final FileUriCallback callback) {
+        final Handler ui = new Handler();
+        WorkerHandler.execute(new Runnable() {
+            @Override
+            public void run() {
+                final Uri result = writeToFile(context, data, file);
                 ui.post(new Runnable() {
                     @Override
                     public void run() {

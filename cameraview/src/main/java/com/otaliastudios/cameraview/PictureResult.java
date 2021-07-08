@@ -1,7 +1,9 @@
 package com.otaliastudios.cameraview;
 
+import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 
 import com.otaliastudios.cameraview.controls.Facing;
@@ -171,5 +173,9 @@ public class PictureResult {
      */
     public void toFile(@NonNull File file, @NonNull FileCallback callback) {
         CameraUtils.writeToFile(getData(), file, callback);
+    }
+
+    public void toFile(Context context, @NonNull Uri fileUri, @NonNull FileUriCallback callback) {
+        CameraUtils.writeToFile(context, getData(), fileUri, callback);
     }
 }
